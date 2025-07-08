@@ -32,36 +32,48 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Search query={query} setQuery={setQuery} />
-        <NumResult movies={movies} />
+        <div className="nav-actions">
+          <Search query={query} setQuery={setQuery} />
+          <NumResult movies={movies} />
+        </div>
       </NavBar>
+
       <Main>
-        <Box>
-          {/* {isLoading ? <Loader /> : <MovieList movies={movies} />} */}
-          {isLoading && <Loader />}
-          {!isLoading && !error && (
-            <MovieList movies={movies} onSelectedMovie={handleSelectedMovie} />
-          )}
-          {error && <ErrorMessage message={error} />}
-        </Box>
-        <Box>
-          {selectedId ? (
-            <MovieDetails
-              selectedId={selectedId}
-              onCloseMovie={handleCloseMovie}
-              onAddWatched={handleAddWatched}
-              watched={watched}
-            />
-          ) : (
-            <>
+        <div className="left-panel">
+          <Box>
+            {isLoading && <Loader />}
+            {!isLoading && !error && (
+              <MovieList
+                movies={movies}
+                onSelectedMovie={handleSelectedMovie}
+              />
+            )}
+            {error && <ErrorMessage message={error} />}
+          </Box>
+        </div>
+
+        <div className="right-panel">
+          <Box>
+            {selectedId ? (
+              <MovieDetails
+                selectedId={selectedId}
+                onCloseMovie={handleCloseMovie}
+                onAddWatched={handleAddWatched}
+                watched={watched}
+              />
+            ) : (
               <WatchedSummary watched={watched} />
+            )}
+          </Box>
+          {!selectedId && (
+            <Box>
               <WatchedMoviesList
                 watched={watched}
                 onDeleteWatched={handleDeleteWatched}
               />
-            </>
+            </Box>
           )}
-        </Box>
+        </div>
       </Main>
     </>
   );
@@ -93,7 +105,7 @@ function Logo() {
   return (
     <div className="logo">
       <span role="img">🍿</span>
-      <h1>usePopcorn</h1>
+      <h1>Movie Munch</h1>
     </div>
   );
 }
@@ -127,8 +139,17 @@ function NumResult({ movies }) {
   );
 }
 
+// function Main({ children }) {
+//   return <main className="main">{children}</main>;
+// }
+
 function Main({ children }) {
-  return <main className="main">{children}</main>;
+  return (
+    <main className="main">
+      <div className="top-section">{children[0]}</div>
+      <div className="bottom-section">{children[1]}</div>
+    </main>
+  );
 }
 
 function Box({ children }) {
@@ -240,7 +261,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
   const isTop = imdbRating > 8;
   console.log(isTop);
 
-  const [averageRating, setAverageRating] = useState(0);
+  // const [averageRating, setAverageRating] = useState(0);
 
   function handleAdd() {
     const newWatchedMovie = {
