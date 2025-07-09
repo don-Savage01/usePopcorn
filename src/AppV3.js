@@ -6,7 +6,8 @@ import { useLocalStoragesState } from "./useLocalStorageState";
 
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
-const KEY = "24e5dfa1";
+const KEY = process.env.REACT_APP_OMDB_API_KEY;
+
 export default function App() {
   const [query, setQuery] = useState("");
   const [selectedId, setSelectedId] = useState(null);
