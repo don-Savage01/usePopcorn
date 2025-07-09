@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 const KEY = process.env.REACT_APP_OMDB_API_KEY;
 
+console.log("OMDB KEY:", KEY);
+
 export function useMovies(query) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +17,7 @@ export function useMovies(query) {
           setIsLoading(true);
           setError("");
           const res = await fetch(
-            `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+            `https://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
             { signal: controller.signal }
           );
           if (!res.ok) throw new Error("No internet connection...");
