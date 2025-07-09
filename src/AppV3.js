@@ -206,7 +206,11 @@ function MovieList({ movies, onSelectedMovie }) {
 function Movie({ movie, onSelectedMovie }) {
   return (
     <li onClick={() => onSelectedMovie(movie.imdbID)}>
-      <img src={movie.Poster} alt={`${movie.Title} poster`} />
+      <img
+        src={movie.Poster === "N/A" ? "/default-poster.jpg" : movie.Poster}
+        alt={`${movie.Title} poster`}
+      />
+
       <h3>{movie.Title}</h3>
       <div>
         <p>
@@ -246,7 +250,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     Released: released,
     Actors: actors,
     Director: director,
-    Genere: genere,
+    Genere: genre,
   } = movie;
 
   // if (imdbRating > 8) [isTop, setIsTop] = useState(true);
@@ -333,13 +337,17 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
             <button className="btn-back" onClick={onCloseMovie}>
               &larr;
             </button>
-            <img src={poster} alt={`Poster of ${movie} movie`} />
+            <img
+              src={poster === "N/A" ? "/default-poster.jpg" : poster}
+              alt={`Poster of ${title} movie`}
+            />
+
             <div className="detail-overview">
               <h2>{title}</h2>
               <p>
                 {released} &bull; {runtime}
               </p>
-              <p>{genere}</p>
+              <p>{genre}</p>
               <p>
                 <span>⭐️</span>
                 {imdbRating} IMDB rating
